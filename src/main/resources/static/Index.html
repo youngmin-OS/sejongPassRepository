@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>세종대학교 합격생 인증</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    .container {
+      width: 400px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="tel"],
+    input[type="file"] {
+      width: 100%;
+      margin-top: 5px;
+      padding: 8px;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 10px;
+      background: #8b0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #a30000;
+    }
+    img {
+      width: 100%;
+      margin-top: 15px;
+      display: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>세종대학교 합격생 인증</h2>
+
+    <label>이름</label>
+    <input type="text" id="name" placeholder="이름 입력" />
+
+    <label>전화번호</label>
+    <input type="tel" id="phone" placeholder="010-0000-0000" />
+
+    <label>합격증 이미지</label>
+    <input type="file" id="image" accept="image/*" />
+
+    <img id="preview" />
+
+    <button onclick="submitForm()">제출</button>
+  </div>
+
+  <script>
+    const imageInput = document.getElementById("image");
+    const preview = document.getElementById("preview");
+
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+      }
+    });
+
+    function submitForm() {
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+
+      if (!name || !phone || imageInput.files.length === 0) {
+        alert("모든 항목을 입력해주세요.");
+        return;
+      }
+      
+    }
+  </script>
+
+</body>
+</html>
