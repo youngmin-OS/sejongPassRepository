@@ -88,23 +88,6 @@
   z-index: 1000;
 ">🔑</button>
 
-  <script>
-    const adminBtn = document.getElementById("adminBtn");
-    const adminPassword = "sejong@1234!!@#$";
-
-    adminBtn.addEventListener("click", () => {
-      const input = prompt("관리자 비밀번호를 입력하세요:");
-
-      if (input === null) return; // 취소 눌렀을 때 종료
-
-      if (input === adminPassword) {
-        window.location.href = "admin.html"; // 맞으면 이동
-      } else {
-        alert("❌ 비밀번호가 틀렸습니다.");
-      }
-    });
-  </script>
-
   <!-- 제출 -->
   <div class="container">
     <h2>세종대학교 합격생 인증</h2>
@@ -165,15 +148,13 @@
       const name = document.getElementById("name").value.trim();
       const phoneRaw = document.getElementById("phone").value.trim();
       const phoneNumber = onlyDigits(phoneRaw);
-      const admissionYearRaw = document.getElementById("admissionYear").value.trim();
-      const admissionYear = admissionYearRaw ? Number(admissionYearRaw) : null;
 
       if (!name || !phoneNumber || imageInput.files.length === 0) {
         alert("이름/전화번호/파일은 필수입니다.");
         return;
       }
 
-      const dataObj = { name, phoneNumber, admissionYear };
+      const dataObj = { name, phoneNumber };
 
       const form = new FormData();
       form.append("data", new Blob([JSON.stringify(dataObj)], { type: "application/json" }));
@@ -247,6 +228,22 @@
         console.error(e);
       }
     }
+
+    const adminBtn = document.getElementById("adminBtn");
+    const adminPassword = "sejong@1234!!@#$";
+
+    adminBtn.addEventListener("click", () => {
+      const input = prompt("관리자 비밀번호를 입력하세요:");
+
+      if (input === null) return; // 취소 눌렀을 때 종료
+
+      if (input === adminPassword) {
+        window.location.href = "admin.html"; // 맞으면 이동
+      } else {
+        alert("❌ 비밀번호가 틀렸습니다.");
+      }
+    });
+
   </script>
 </body>
 
