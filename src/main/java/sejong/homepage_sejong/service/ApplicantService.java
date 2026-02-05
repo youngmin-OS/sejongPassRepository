@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 public class ApplicantService {
 
@@ -72,4 +74,8 @@ public class ApplicantService {
                 .findTopByApplicantIdOrderByCreatedAtDesc(applicantId)
                 .orElseThrow();
     }
+
+    public List<Applicant> listAll() { return applicantRepository.findAll(); }
+    public List<Applicant> listByStatus(ApprovalStatus s) { return applicantRepository.findByStatus(s); }
+
 }

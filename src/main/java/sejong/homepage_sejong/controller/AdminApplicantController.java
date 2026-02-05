@@ -1,6 +1,8 @@
 package sejong.homepage_sejong.controller;
 
+import sejong.homepage_sejong.domain.Applicant;
 import sejong.homepage_sejong.domain.UploadFile;
+import sejong.homepage_sejong.domain.ApprovalStatus;
 import sejong.homepage_sejong.service.ApplicantService;
 import sejong.homepage_sejong.service.FileStorageService;
 import sejong.homepage_sejong.service.dto.ReviewRequest;
@@ -9,6 +11,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -38,4 +41,11 @@ public class AdminApplicantController {
                         "attachment; filename=\"" + f.getOriginalFilename() + "\"")
                 .body(new UrlResource(path.toUri()));
     }
+
+    @GetMapping("/applicants")
+    public List<Applicant> list(@RequestParam(required = false) ApprovalStatus status) {
+        return status == null ? service.listAll() : service.listByStatus(status);
+    }
+
+
 }
