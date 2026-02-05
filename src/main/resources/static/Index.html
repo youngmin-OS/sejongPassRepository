@@ -88,22 +88,22 @@
   z-index: 1000;
 ">🔑</button>
 
-<script>
-  const adminBtn = document.getElementById("adminBtn");
-  const adminPassword = "sejong@1234!!@#$";
+  <script>
+    const adminBtn = document.getElementById("adminBtn");
+    const adminPassword = "sejong@1234!!@#$";
 
-  adminBtn.addEventListener("click", () => {
-    const input = prompt("관리자 비밀번호를 입력하세요:");
+    adminBtn.addEventListener("click", () => {
+      const input = prompt("관리자 비밀번호를 입력하세요:");
 
-    if (input === null) return; // 취소 눌렀을 때 종료
+      if (input === null) return; // 취소 눌렀을 때 종료
 
-    if (input === adminPassword) {
-      window.location.href = "admin.html"; // 맞으면 이동
-    } else {
-      alert("❌ 비밀번호가 틀렸습니다.");
-    }
-  });
-</script>
+      if (input === adminPassword) {
+        window.location.href = "admin.html"; // 맞으면 이동
+      } else {
+        alert("❌ 비밀번호가 틀렸습니다.");
+      }
+    });
+  </script>
 
   <!-- 제출 -->
   <div class="container">
@@ -114,9 +114,6 @@
 
     <label>전화번호</label>
     <input type="tel" id="phone" placeholder="010012345678" />
-
-    <label>입학년도(선택)</label>
-    <input type="number" id="admissionYear" placeholder="2026" />
 
     <label>합격증 이미지</label>
     <input type="file" id="image" accept="image/*,application/pdf" />
@@ -153,7 +150,6 @@
       const file = imageInput.files[0];
       if (!file) return;
 
-      // 이미지면 미리보기, pdf면 미리보기 숨김
       if (file.type.startsWith("image/")) {
         preview.src = URL.createObjectURL(file);
         preview.style.display = "block";
@@ -180,7 +176,6 @@
       const dataObj = { name, phoneNumber, admissionYear };
 
       const form = new FormData();
-      // ✅ 백엔드가 @RequestPart("data")로 받으므로 JSON Blob으로 넣는 게 안전
       form.append("data", new Blob([JSON.stringify(dataObj)], { type: "application/json" }));
       form.append("file", imageInput.files[0]);
 
@@ -229,7 +224,6 @@
         }
 
         const data = await res.json();
-        // ApplicantStatusResponse: status, message, openKakaoUrl, meetingPlace, rejectReason :contentReference[oaicite:6]{index=6}
 
         if (data.status === "APPROVED") {
           resultMessage.style.color = "green";
