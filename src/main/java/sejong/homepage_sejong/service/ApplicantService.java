@@ -62,10 +62,12 @@ public class ApplicantService {
     @Transactional
     public void review(Long id, ReviewRequest req) {
         Applicant a = applicantRepository.findById(id).orElseThrow();
-        if ("APPROVE".equals(req.getAction())) {
-            a.approve(req.getOpenKakaoUrl(), req.getMeetingPlace());
+        if ("APPROVED".equals(req.getAction())) { 
+        a.approve(req.getOpenKakaoUrl(), req.getMeetingPlace());
+        } else if ("REJECTED".equals(req.getAction())) {
+        a.reject(req.getRejectReason());
         } else {
-            a.reject(req.getRejectReason());
+        throw new IllegalArgumentException("Unknown action: " + req.getAction());
         }
     }
 

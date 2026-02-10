@@ -99,7 +99,7 @@
 
     <!-- 좌측: 목록 -->
     <div class="card">
-      
+
       <h2>지원자 목록</h2>
 
       <div class="row" style="margin-bottom:10px;">
@@ -120,7 +120,6 @@
             <th>ID</th>
             <th>이름</th>
             <th>전화번호</th>
-            <th>입학년도</th>
             <th>상태</th>
           </tr>
         </thead>
@@ -149,6 +148,7 @@
       <div class="row" style="margin-top:8px;">
         <button onclick="reject()">반려</button>
         <button onclick="downloadFile()" style="background:#333;">파일 다운로드</button>
+        <button onclick="deleteApplicant()" style="background:#555;">삭제</button>
       </div>
 
       <p id="msg" class="muted" style="margin-top:10px;"></p>
@@ -190,7 +190,6 @@
           <td>${a.id}</td>
           <td>${a.name ?? ""}</td>
           <td>${a.phoneNumber ?? ""}</td>
-          <td>${a.admissionYear ?? ""}</td>
           <td><span class="pill">${a.status ?? ""}</span></td>
         `;
         tbody.appendChild(tr);
@@ -260,7 +259,28 @@
       window.open(`/api/admin/file/${selectedId}`, "_blank");
     }
 
-    // 페이지 로드시 자동 조회
+    async function deleteApplicant() {
+      if (!selectedId) return alert("지원자를 선택하세요.");
+
+      const ok = confirm("정말 이 지원자를 삭제하시겠습니까?\n삭제하면 복구할 수 없습니다.");
+      if (!ok) return;
+
+      const res = await fetch(`/api/admin/applicants/${selectedId}`, {
+        method: "DELETE"
+      });
+
+      if (!res.ok) {
+        alert("삭제 실패: " + res.status);
+        return;
+      }
+
+      alert("✅ 지원자가 삭제되었습니다.");
+      selectedId = null;
+      document.getElementById('detail').innerText =
+        "왼쪽 목록에서 지원자를 클릭하세요.";
+      await loadApplicants();
+    }
+
     loadApplicants();
   </script>
 </body>
